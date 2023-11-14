@@ -75,3 +75,15 @@ usb-gadget is licensed under the [Apache 2.0 license].
 Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in usb-gadget by you, shall be licensed as Apache 2.0, without any
 additional terms or conditions.
+
+#### Additional Info  
+still needs the device-side hardware (possibly as part of a DRD or OTG port) "common in most laptops on the market today. A laptop that charges from USB-C must support device mode, that is required to communicate with a USB-C charger host. Without device side hardware it cannot charge. With this also comes features like Target Disk Mode, another function that requires device side hardware.
+
+at least one of the "Type-C link partners" must support so-called DRD - Dual Role Device. The DRD port advertises its dual role by continuously switching its CC (communication channel) pins from 5.1k pull-down (signifying a USB device) to 56k-22k-10k pull-up (signifying USB host with different VBUS supply capability). It does this flip-flop several cycles per second.
+
+However, to be a DRD Type-C device, it must have TWO USB controllers inside, one of xHCI (host controller interface), and another of "DCI" type - device controller interface. The IO of these two controllers must be multiplexed at the USB port pins. Currently only a few products (notably the Intel SoC aka "atom cheery trail" family, and other mobile-oriented chips found in mobile phones) have this capability. If a PC is made of desktop line of processors, no DRD is available yet.
+
+If both PC are of the same kind, no connection (and no harm) will happen.
+
+If one Type-C PC has DRD functionality, it will pick the phase of its "flip-flop advertising" with the role that is opposite to the connected single-role device. If the connecting device is host, the DRD device will lock as device, and vice-versa. If both devices are DRD, the roles will be selected at random, and later should be switchable in software.
+
